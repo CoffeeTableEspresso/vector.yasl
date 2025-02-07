@@ -1,0 +1,34 @@
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+- v0.*
+
+pr:
+- master
+- v0.*
+
+jobs:
+- job:
+  displayName: "C GCC Ubuntu"
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - script:
+      sudo apt install valgrind
+    displayName: "Install Valgrind"
+  - script: |
+      set -e
+      git clone --single-branch --branch v0.11.8 https://github.com/yasl-lang/yasl/
+      (
+        cd yasl
+        cmake .
+        make yasl
+        make yaslapi
+        sudo ./install.sh
+      )
+    displayName: "Install YASL"
+  - script:
+      ./tests.sh
+    displayName: "Run Tests"

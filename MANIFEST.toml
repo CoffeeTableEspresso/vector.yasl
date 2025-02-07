@@ -1,0 +1,10 @@
+name = "<name>"
+authors = [ "CoffeeTableEspresso <coffeetableespresso@gmail.com>" ]
+version = "v0.1.0"
+license = "<license>"
+
+[build]
+sources = []
+scripts = []
+
+[deps]
