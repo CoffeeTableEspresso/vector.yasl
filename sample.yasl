@@ -1,0 +1,38 @@
+
+const v = __require_c__('./libvector.so')
+
+const x = v(1.42, 2.0, 5.0);
+const y = v(0.0, 3.5, 6.1);
+
+const z = x + y
+
+echo x, len x
+echo y, len y
+echo x + y, x - y, x * y, x / y
+
+echo x * 10, x - 5.0, x + 5.0
+
+echo x->tolist()
+
+fn transform(vec, f) {
+	const tmp = []
+	for val in vec->tolist() {
+		tmp->push(f(val))
+	}
+	return v(tmp), tmp
+}
+
+fn reduce(vec, f, start) {
+	let tmp = start ?? 0.0
+	for val in vec->tolist() {
+		tmp = f(val, tmp)
+	}
+	return tmp
+}
+
+echo transform(x, fn(a) -> a * 2)
+echo reduce(x, fn(a, b) -> a + b)
+echo reduce(x, (fn(a, b) -> a * b), 1)
+
+echo x->spread()
+
